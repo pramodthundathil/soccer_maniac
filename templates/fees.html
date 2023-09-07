@@ -1,0 +1,236 @@
+{% extends "index.html" %}
+{% block content %}
+
+<style>
+  .student-add{
+    width:90%;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.newbtn{
+  padding: 8px 20px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  background-color: #38598b;
+  border: .5px solid black;
+}
+  .forminputs {
+    text-align: center;
+}
+
+.forminputs input,
+select,
+textarea {
+    width: 80%;
+    padding: 10px;
+    border: .5px solid #38598b57;
+    border-radius: 7px;
+}
+.head{
+  padding: 10px;
+  background-color: hsla(216, 43%, 38%, 0.1);
+  font-weight: 700;
+}
+.popup{
+  position: fixed;
+  top:100px;
+  width: 300px;
+  right: 3px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+@media (max-width:600px){
+  .forminputs select{
+      font-size: 30px !important;
+  }
+}
+</style>
+<div class="dash-content">
+    <div class="hedding">
+        <h5><i class="bi bi-mortarboard-fill" style="font-size: larger;"></i>
+             Fees</h5>
+    </div>
+</div>
+    
+
+    <div class="student-add mt-5">
+      <button class="newbtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle"></i> Add Fee</button>
+      <a href="" class="btn btn-outline-dark"><i class="bi bi-download"></i> Generate Report</a>
+    </div>
+  </div>
+
+  <div class="head mt-5" style="text-align: center;color:#38598b; font-size:large;">Fee Details</div> <br>
+  {% for message in messages  %}
+    
+
+  <div class="alert {{message.tags}} alert-dismissible fade show popup" role="alert">
+    <strong>Success!</strong> {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  {% endfor %}
+
+  <div class="feedetails">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="feecolletion">
+          <div class="top-head">
+              <div class="top-item">
+                  <h6>Fee Details ({{month}}) </h6>
+              </div>
+              <div class="top-item">
+                  <a href="{%url 'FeesData' %}" class="btn btn-warning">View</a>
+              </div>
+          </div>
+          <div class="tableitems">
+              <table class="table table-primary">
+                  <tr>
+                      <td>Collected Amount</td>
+                      <td class="amount">Rs.{{total_fee}}/-</td>
+                  </tr>
+                  <tr>
+                      <td>Fee Given Students</td>
+                      <td class="amount">{{student_num}} students</td>
+                  </tr>
+                  <tr>
+                      <td>Pendiing Students</td>
+                      <td class="amount">{{pending_students}} students</td>
+                  </tr>
+              </table>
+          </div>
+
+      </div>
+
+      </div>
+      <!-- <div class="col-md-6">
+        <div class="feecolletion">
+          <div class="top-head">
+              <div class="top-item">
+                  <h6></h6>
+              </div>
+              <div class="top-item">
+              <a href="{%url 'Students' %}" class="btn btn-warning">View</a>
+              </div>
+          </div>
+          <div class="tableitems">
+              <table class="table table-active">
+                  <tr>
+                      <td>Total Students</td>
+                      <td class="amount">100 students</td>
+                  </tr>
+                  <tr>
+                      <td>Month Admission</td>
+                      <td class="amount">20 students</td>
+                  </tr>
+                  <tr>
+                      <td>Month Passouts</td>
+                      <td class="amount">19 students</td>
+                  </tr>
+              </table>
+          </div>
+
+      </div>
+
+      </div> -->
+      
+    </div>
+  </div>
+  <!-- <div class="head mt-3" style="text-align: center;color:#38598b; font-size:large;">Fee Datas</div> <br> -->
+
+  <div class="fee-status">
+    <div class="row">
+      <div class="col">
+        <div class="feecolletion">
+          <div class="top-head">
+              <div class="top-item">
+                  <h6>Fee Pending<small></small></h6>
+              </div>
+              <div class="top-item">
+                  <a href="{%url 'PendinFees' %}" class="btn btn-warning">View</a>
+              </div>
+          </div>
+        
+      </div>
+      </div>
+
+      <div class="col">
+        <div class="feecolletion">
+          <div class="top-head">
+              <div class="top-item">
+                  <h6>Upcomming Payments <small></small></h6>
+              </div>
+              <div class="top-item">
+                  <a href="{%url 'UpcomingPayments' %}" class="btn btn-warning">View</a>
+              </div>
+          </div>
+        
+      </div>
+      </div>
+      
+      <div class="col">
+        <div class="feecolletion">
+          <div class="top-head">
+              <div class="top-item">
+                  <h6>Collected Fees <small></small></h6>
+              </div>
+              <div class="top-item">
+                  <!-- <a href=""><i class="bi bi-eye"></i></a> -->
+                  <a href="{%url 'FeeGivenDetails' %}" class="btn btn-warning">View</a>
+              </div>
+          </div>
+          <!-- <div class="tableitems">
+              <table class="table table-info">
+                <tr>
+                  <th>Student</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Delete</th>
+                </tr>
+                {% for fee in fees %}
+                  
+                  <tr>
+                    <td>{{fee.student.FullName}}</td>
+                    <td><b>{{fee.Fee_amount}}</b></td>
+                    <td>{{fee.date}}</td>
+                    <td><a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></td>
+                  </tr>
+                {% endfor %}
+
+              </table>
+          </div> -->
+
+      </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog mt-5">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 style="color:#38598b" class="modal-title fs-5" id="exampleModalLabel">Add Fee</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body forminputs">
+          <form method="POST">
+            {% csrf_token %}
+            {% for fields in form  %}
+              {{fields.label}} <br>
+              {{fields}} <br><br>
+            {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}

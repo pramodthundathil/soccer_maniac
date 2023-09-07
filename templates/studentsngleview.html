@@ -1,0 +1,203 @@
+{% extends "index.html" %}
+{% block content %}
+<style>
+    .student {
+        padding: 10px;
+        background-color: rgb(56, 89, 139, .1);
+        color: #38598b;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .studentdetails {
+        width: 95%;
+        margin: auto;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-evenly;
+        width: 70%;
+        padding: 10px;
+        margin: auto;
+    }
+
+    .actions a {
+        font-size: 35px;
+    }
+
+    .forminputs {
+        text-align: center;
+    }
+
+    .forminputs input,
+    select,
+    textarea {
+        width: 80%;
+        padding: 10px;
+        border: .5px solid #38598b57;
+        border-radius: 7px;
+    }
+</style>
+<div class="dash-content">
+
+    <div class="hedding">
+        <h5><i class="bi bi-mortarboard-fill" style="font-size: 30px;"></i>
+            Student Data - Single View</h5>
+    </div>
+</div>
+
+<div class="student mt-3">Details Of Pramod Gopinath</div>
+
+<div class="actions mt-3">
+    <div class="action-items text-center">
+        <a href="{%url 'DeleteStudent' student.id %}" class="text-danger"><i class="bi bi-trash-fill"></i></a> <br>
+        <span class="text-danger">Delete</span>
+    </div>
+    <!-- <div class="action-items">
+    </div> -->
+
+</div>
+
+<div class="studentdetails mt-3">
+    <table class="table table-info table-striped-columns">
+        <tr>
+            <td>Name</td>
+            <th>: {{student.FullName}}</th>
+        </tr>
+        <tr>
+            <td>DOB</td>
+            <th>: {{student.Date_of_Birth}}</th>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <th>: {{student.Address}}</th>
+
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <th>: {{student.Phone_Number}}</th>
+
+        </tr>
+        <tr>
+            <td>Email</td>
+            <th>: {{student.Email}}</th>
+
+        </tr>
+        <tr>
+            <td>Parenet Mobile</td>
+            <th>: {{student.Parents_Mobile_Number}}</th>
+
+        </tr>
+        <tr>
+            <td>Blood Group</td>
+            <th>: {{student.Blood_Group}}</th>
+
+        </tr>
+        <tr>
+            <td>Is Id proof available</td>
+            <th>: {% if student.ID_Proof_Submitted == True %}
+                <span class="badge text-bg-success">Available</span>
+
+                {% else %}
+                <span class="badge text-bg-danger">Not Available</span>
+
+                {% endif %}
+            </th>
+
+        </tr>
+        <tr>
+            <td>Type Of Id</td>
+            <th>: {{student.Type_Of_Id_Proof}}</th>
+
+        </tr>
+        <tr>
+            <td>Class Studing</td>
+            <th>: {{student.Class_Studing}}</th>
+
+        </tr>
+        <tr>
+            <td>School</td>
+            <th>: {{student.School}}</th>
+
+        </tr>
+        <tr>
+            <td>School Timeing</td>
+            <th>: {{student.School_Timeing}}</th>
+
+        </tr>
+        <tr>
+            <td>Date Of Joining</td>
+            <th>: {{student.Date_of_Joining}}</th>
+
+        </tr>
+        <!-- <tr>
+            <td>Date Of Leaving</td>
+            <th>: {{student.Date_of_Leaving}}
+                 <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="text-info"><i
+                        class="bi bi-pencil-square"></i></a>
+            </th>
+
+        </tr> -->
+        <!-- <tr>
+            <td>Course Duration</td>
+            <th>: {{student.Course_Duration_In_Months}} Months</th>
+
+        </tr> -->
+        <!-- <tr>
+            <td>Total Fee</td>
+            <th>: {{student.Total_Fee}}</th>
+
+        </tr> -->
+        <!-- <tr>
+            <td>Discount</td>
+            <th>: {{student.Discount}} %</th>
+
+        </tr> -->
+        <!-- <tr>
+            <td>Fee Installmants</td>
+            <th>: {{student.Fee_Installments}}</th>
+
+        </tr> -->
+        <tr>
+            <td>Status</td>
+            <th>: {% if student.Live_Status == True %}
+                <span class="badge text-bg-success">Active</span>
+                {% else %}
+                <span class="badge text-bg-warning">Inactive</span>
+                {% endif %}
+            </th>
+
+        </tr>
+    </table>
+
+</div>
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 style="color:#38598b" class="modal-title fs-5" id="exampleModalLabel">Change Date Of leaving</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body forminputs">
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="">Add Date of leaving</label>
+
+                    <input type="date" value="{{student.Date_of_Birth}}" name="dol"><br><br>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

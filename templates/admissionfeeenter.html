@@ -1,0 +1,66 @@
+{% extends "index.html" %}
+{% block content %}
+<style>
+    .formcontainer{
+        width:95%;
+        margin: auto;
+    }
+    .forminputs{
+        text-align: center;
+    }
+    .forminputs input, select, textarea{
+        width:80%;
+        padding: 10px;
+        border: .5px solid #38598b57;
+        border-radius: 7px;
+    }
+    .popup{
+        position: fixed;
+        top:100px;
+        width: 300px;
+        right: 3px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    }
+    .head{
+        padding: 10px;
+        background-color: hsla(216, 43%, 38%, 0.1);
+        font-weight: 700;
+    }
+    @media (max-width:600px){
+        .forminputs select{
+            font-size: 30px !important;
+        }
+      }
+</style>
+<div class="dash-content">
+    <div class="hedding">
+        <h5><i class="bi bi-mortarboard-fill" style="font-size: 30px;"></i>
+             Student Data</h5>
+    </div>
+  </div>
+
+  {% for message in messages  %}
+
+  <div class="alert {{message.tags}} alert-dismissible fade show popup" role="alert">
+    <strong>Success!</strong> {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  {% endfor %}
+
+<div class="head mt-3" style="text-align: center;color:#38598b; font-size:large;">Admission Fee</div> <br>
+
+<div class="formcontainer mt-3">
+   <div class="forminputs">
+          <form method="POST">
+            {% csrf_token %}
+            {% for fields in form  %}
+              {{fields.label}} <br>
+              {{fields}} <br><br>
+            {% endfor %}
+          <button type="submit" class="btn btn-info">Save changes</button>
+          <a href="{%url 'Students' %}" class="btn btn-outline-dark">Later</a>
+        </form>
+</div>
+  
+{% endblock %}

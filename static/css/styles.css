@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+body{
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif !important;
+    background-color: rgba(245, 226, 178, 0.189) !important;
+    /* background-image: linear-gradient(to bottom, rgba(218, 165, 32, 0.589) rgba(218, 165, 32, 0.269)); */
+    /* background-repeat: no-repeat; */
+}
+.navcat{
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+    /* background-color: rgb(62, 245, 62); */
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    color: black;
+    background-color: #38598b !important;
+}
+.ham-button, .ham{
+    background-color: #38598b !important;
+    color: #fff !important;
+}
+
+
+.lettering{
+    color: goldenrod;
+    font-family: 'Oswald', sans-serif;
+    text-shadow: 1px 1px 1px #000;
+}
+.bottom-nav{
+    display: flex;
+    padding: 8px;
+    justify-content: space-evenly;
+    align-items: baseline;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    border-top: .5px solid rgba(218, 165, 32, 0.614);
+    background-color: white;
+}
+.bottom-nav a{
+    text-decoration: none;
+    /* font-size: 50px; */
+    /* color: rgba(0, 0, 0, 0.571); */
+    /* color: #212529; */
+    color: #38598b;
+    text-shadow: 1px 1px 1px rgba(218, 165, 32, 0.101);
+    text-align: center;
+
+}
+.bottom-nav a span{
+    font-size: 35px;
+}
+.bottom-nav a:hover{
+    text-shadow: 2px 1px 3px rgba(218, 165, 32, 0.501);
+
+}
+.b-nav-items{
+    text-align: center;
+}
+.b-nav-items p{
+    font-size: small;
+}
+.dash-content{
+    margin-top: 70px;
+}
+.dash-items{
+    width:95%;
+    margin: auto;
+}
+.feecolletion{
+    width:95%;
+    margin: auto;
+    margin-bottom: 35px;
+    /* border: .5px solid #a2a8d3; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* height: 100px; */
+    background-color: #38598b;
+    /* padding: 20px; */
+}
+
+.feecolletion .top-head{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: .3px solid rgb(164, 162, 162) ;
+    padding: 10px;
+}
+.feecolletion h6{
+    color: #fff;
+}
+.top-item a{
+    padding: 2px 30px;
+    font-weight: bolder;
+    font-size: 17px;
+    background-color: rgb(145, 145, 226);
+    text-decoration: none;
+    color: rgb(44, 44, 53);
+    border-radius: 10px;
+}
+.top-item a:hover{
+    background-color: rgb(214, 227, 252);
+    color: rgb(145, 145, 226);
+    border: .5px solid rgb(145, 145, 226)  ;
+    outline: none;
+    /* color: #ffff; */
+}
+.feecolletion .amount{
+    font-weight: bold;
+}
+.hedding{
+    padding: 10px;
+    background-color: rgba(218, 165, 32, 0.554);
+    width:80%;
+    margin: auto;
+    text-align: center;
+    margin-top: 10px;
+    color: #38598b;
+
+}
+.footer{
+    margin-bottom: 50px;
+    padding: 20px;
+    text-align: center;
+}
+
