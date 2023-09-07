@@ -42,6 +42,9 @@ class Fees(models.Model):
     opt = (("Admission Fee","Admission Fee"),("Monthly Fee","Monthly Fee"),("Other","Other"))
     reason = models.CharField(max_length=30,choices=opt,null=True, blank=True)
     
+    def __str__(self):
+        return self.student.FullName
+
     
     
     

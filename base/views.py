@@ -163,18 +163,35 @@ def PendinFees(request):
     from django.utils import timezone
     current_month = timezone.now().month
     current_year = timezone.now().year
-    pendingstudents = []
     
-    students = StudentDetails.objects.all()
-    for i in students:
+    pendingstudents = Fees.objects.exclude(date__month =current_month,date__year=current_year)
+
+    students_val = []
+    # students = StudentDetails.objects.all()
+    # for i in students:
         
-        feepayedstudents = Fees.objects.filter(date__month=current_month,date__year=current_year,student = i)
+    #     feepayedstudents = Fees.objects.filter(date__month =current_month,date__year=current_year,student = i)
+        # pendingstudents.append(feepayedstudents)
+        # print(feepayedstudents,"========================================")
         
-        if feepayedstudents is not None:
-            continue
-        else:
-            pendingstudents.append(i)
+        # if feepayedstudents is not None:
+        #     continue
+        # else:
+        #     pendingstudents.append(i)
+    for i in pendingstudents:
+        students_val.append(i.student)
          
-    print(pendingstudents)
-    
-    return render(request,"pendingfees.html")
+    pending_students = list(set(students_val))
+    # from django.db.models import F, Count
+    # duplicates = pendingstudents.values('student').annotate(count=Count('student')).filter(count__gt=1)
+    # Get a list of related_field values that are duplicates
+    # duplicate_related_field_values = [item['student'] for item in duplicates]
+
+    # Exclude objects with duplicate related_field values
+    # filtered_queryset = pendingstudents.exclude(student__in=duplicate_related_field_values)
+    # queryset = pendingstudents.order_by('student', 'id').distinct('student')
+    # print(filtered_queryset)
+    context = {
+        "pendingstudents":pending_students
+    }
+    return render(request,"pendingfees.html",context)
