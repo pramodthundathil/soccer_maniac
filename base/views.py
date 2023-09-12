@@ -158,15 +158,15 @@ def UpcomingPayments(request):
     context = {"upcomming":upcommimgfeestudents}
     return render(request,"upcommingpayments.html",context)
 
-def PendinFees(request):
-    from datetime import datetime, timedelta
-    from django.utils import timezone
-    current_month = timezone.now().month
-    current_year = timezone.now().year
+# def PendinFees(request):
+#     from datetime import datetime, timedelta
+#     from django.utils import timezone
+#     current_month = timezone.now().month
+#     current_year = timezone.now().year
     
-    pendingstudents = Fees.objects.exclude(date__month =current_month,date__year=current_year)
+    # pendingstudents = Fees.objects.exclude(date__month =current_month,date__year=current_year)
 
-    students_val = []
+    # students_val = []
     # students = StudentDetails.objects.all()
     # for i in students:
         
@@ -180,8 +180,21 @@ def PendinFees(request):
         #     pendingstudents.append(i)
     for i in pendingstudents:
         students_val.append(i.student)
-         
-    pending_students = list(set(students_val))
+        
+        
+    from django.db.models import F, Count, Q
+    from django.db.models.functions import ExtractMonth
+
+# Get the current month
+# current_month = 9  # Replace with the current month number (e.g., 9 for September)
+
+# Query the database
+    # results = Fees.objects.filter(~Q(date__month=current_month,date__year=current_year),  # Exclude records in the current month
+    # student__in=Fees.objects.values('student').annotate(foreign_key_count=Count('student')).filter(student=1)  # Filter for foreign key elements with a count of 1
+    # )
+
+    # print(results,"========================")   
+    # pending_students = list(set(students_val))
     # from django.db.models import F, Count
     # duplicates = pendingstudents.values('student').annotate(count=Count('student')).filter(count__gt=1)
     # Get a list of related_field values that are duplicates
@@ -191,7 +204,50 @@ def PendinFees(request):
     # filtered_queryset = pendingstudents.exclude(student__in=duplicate_related_field_values)
     # queryset = pendingstudents.order_by('student', 'id').distinct('student')
     # print(filtered_queryset)
+    # context = {
+    #     "pendingstudents":pending_students
+    # }
+    # return render(request,"pendingfees.html",context)
+
+def PendinFees(request):
+    from datetime import datetime, timedelta
+    from django.utils import timezone
+    current_month = timezone.now().month
+    current_year = timezone.now().year
+    current_day = timezone.now().day
+    pendingstudents = Fees.objects.exclude(date__month =current_month,date__year=current_year)
+    feepaiedstudents = Fees.objects.filter(date__month =current_month,date__year=current_year)
+    
+    studentsfeepending = []
+    studentsfeepaid = []
+    final_fee_pending = []
+    for i in pendingstudents:
+        studentsfeepending.append(i.student)
+    for j in feepaiedstudents:
+        studentsfeepaid.append(j)
+        
+    students = StudentDetails.objects.all()
+    
+    pending_on_month = list(set(students).difference(set(studentsfeepending)))
+    print(pending_on_month)
+    print(students[0].Date_of_Joining.day)
+    final_fee_pending.extend(pending_on_month)
+    
+    for item in studentsfeepending:
+        try:
+            feepend = Fees.objects.get(date__day__lte = item.Date_of_Joining.day, student = item)
+            final_fee_pending.append(feepend.student)
+        except:
+            continue
+        
+    print(final_fee_pending)
+    
+    for stu in final_fee_pending:
+        if stu.Date_of_Joining.day > current_day:
+            final_fee_pending.remove(stu)
+             
+    
     context = {
-        "pendingstudents":pending_students
+        "pendingstudents":final_fee_pending
     }
     return render(request,"pendingfees.html",context)
