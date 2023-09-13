@@ -28,6 +28,13 @@
                     font-size: smaller !important;
                 }
             }
+            .popup{
+                position: fixed;
+                top:100px;
+                width: 300px;
+                right: 3px;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+              }
         </style>
 </head>
 
@@ -75,6 +82,8 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark">
                                 {% if request.user.is_authenticated %}
+                                <li><a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="dropdown-item" href="#">Add Email</a></li>
+
                                 <li><a class="dropdown-item" href="{%url 'SignOut' %}">Logout</a></li>
 
                                 {% else%}
@@ -97,6 +106,42 @@
             </div>
         </div>
     </nav>
+    <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Add Email</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{%url 'AddEmail' %}" method="POST">
+            {% csrf_token %}
+            <label for="">Enter Email</label><br>
+            <input type="email" name="email" style="width:95%; padding:6px"><br><br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Now</button>
+        </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% for message in messages  %}
+    
+
+  <div class="alert {{message.tags}} alert-dismissible fade show popup" role="alert">
+    <strong>Success!</strong> {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  {% endfor %}
 {% block content %}
   
     <!-- dash board -->

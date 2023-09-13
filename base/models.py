@@ -59,6 +59,9 @@ class Expense(models.Model):
     Date = models.DateField(auto_now_add=False)
     Amount = models.FloatField()
     Reason = models.CharField(max_length=1000)
+    
+class EmailAddress(models.Model):
+    email = models.CharField(max_length=255)
 
     
     

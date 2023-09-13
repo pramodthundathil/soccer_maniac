@@ -4,8 +4,9 @@ from django.template.loader import render_to_string
 from celery import shared_task
 from django.core.mail import send_mail
 from django.core.management.base import BaseCommand
-from .models import Fees
+from .models import Fees, StudentDetails, EmailAddress
 from datetime import timezone
+
 
 @shared_task
 def FeeEmail(request):
@@ -52,7 +53,8 @@ class Command(BaseCommand):
         for stu in final_fee_pending:
             if stu.Date_of_Joining.day > current_day:
                 final_fee_pending.remove(stu)
-                
+        email = EmailAddress.objects.all()
+        emails = []   
         
         context = {
             "pendingstudents":final_fee_pending
@@ -60,5 +62,5 @@ class Command(BaseCommand):
         mail_subject = 'Activate your E-Cart account.'
         message = render_to_string('emailbody.html', context)
 
-        email = EmailMessage(mail_subject, message, to=['gopinath.pramod@gmail.com'])
+        email = EmailMessage(mail_subject, message, to=email)
         email.send(fail_silently=True)

@@ -30,6 +30,8 @@ urlpatterns = [
     path("ExpenseReport",views.ExpenseReport,name="ExpenseReport"), 
     path("ExpenseReportByDate",views.ExpenseReportByDate,name="ExpenseReportByDate"), 
     path("IncomeReport",views.IncomeReport,name="IncomeReport"), 
-    path("IncomeReportByDate",views.IncomeReportByDate,name="IncomeReportByDate"), 
+    path("IncomeReportByDate",views.IncomeReportByDate,name="IncomeReportByDate"),
+    path("AddEmail",views.AddEmail,name="AddEmail"), 
+     
               
 ] 

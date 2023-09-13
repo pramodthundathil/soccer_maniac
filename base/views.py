@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import StudentDetailsForm, FeesForm, ExpenseForm, IncomeForm
-from .models import StudentDetails, Fees, Expense, Income
+from .models import StudentDetails, Fees, Expense, Income, EmailAddress
 from datetime import datetime
 from datetime import datetime, timedelta
 from django.utils import timezone
@@ -119,12 +119,7 @@ def DeleteStudent(request,pk):
 # Fee Calculations====================================
 
 def FeesData(request):
-    fees = Fees.objects.all()
-    mail_subject = 'Pending Fee Deatails.'
-    message = render_to_string('emailbody.html', {"fees":fees})
-
-    email = EmailMessage(mail_subject, message, to=['gopinath.pramod@gmail.com'])
-    email.send(fail_silently=True)
+   
     fees = Fees.objects.all()
     month_num = datetime.now().month
     month = datetime.now().strftime('%B')
@@ -277,7 +272,15 @@ def PendinFees(request):
     for stu in final_fee_pending:
         if stu.Date_of_Joining.day > current_day:
             final_fee_pending.remove(stu)
-             
+    fees = Fees.objects.all()
+    email = EmailAddress.objects.all()
+    emails = []
+    for i in email:
+        emails.append(i.email)
+    mail_subject = 'Pending Fee Deatails.'
+    message = render_to_string('emailbody.html', {"pendingstudents":final_fee_pending})
+    email = EmailMessage(mail_subject, message, to=emails)
+    email.send(fail_silently=True)
     
     context = {
         "pendingstudents":final_fee_pending
@@ -566,6 +569,16 @@ def IncomeReportByDate(request):
             writer.writerow([i.Date,i.Amount,i.Reason,i.Mode_Of_Payment])
 
         return response
+    
+    
+    
+def AddEmail(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        data = EmailAddress.objects.create(email = email)
+        data.save()
+        messages.info(request,"Email Saved")
+    return redirect("HomePage")
     
     
     
