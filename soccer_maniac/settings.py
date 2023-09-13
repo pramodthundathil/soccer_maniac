@@ -137,3 +137,25 @@ STATIC_ROOT = os.path.join(BASE_DIR,'newstatic')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'soccermanicapplication@gmail.com'
+EMAIL_HOST_PASSWORD = 'klcwjirqpqlemscm'
+
+# settings.py
+from datetime import datetime, timedelta
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+# Schedule the task
+CELERY_BEAT_SCHEDULE = {
+    'send-scheduled-email': {
+        'task': 'base.tasks.FeeEmail',
+        'schedule': timedelta(hours=12),  # Adjust the schedule as needed
+    },
+}

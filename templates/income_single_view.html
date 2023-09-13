@@ -1,0 +1,149 @@
+{% extends "index.html" %}
+{% block content %}
+<style>
+    .items{
+        width:95%;
+        margin: auto;
+    }
+    .popup{
+        position: fixed;
+        top:100px;
+        width: 300px;
+        right: 3px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      }
+</style>
+
+<div class="dash-content">
+    <div class="hedding">
+        <h5>
+            Incomes
+        </h5>
+    </div>
+</div>
+{% for message in messages  %}
+    
+
+<div class="alert {{message.tags}} alert-dismissible fade show popup" role="alert">
+  <strong>Success!</strong> {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+<div class="container mt-5">
+    <div class="items">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">All Expenses</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Today</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Month</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="credit-tab" data-bs-toggle="tab" data-bs-target="#credit" type="button" role="tab" aria-controls="contact" aria-selected="false">Credit</button>
+
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <table class="table table-info">
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Reason</th>
+                        <th>Mode</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for x in income %}
+                      
+                    <tr>
+                        <td>{{x.Date}}</td>
+                        <td>{{x.Amount}}</td>
+                        <td>{{x.Reason}}</td>
+                        <td>{{x.Mode_Of_Payment}}</td>
+                        <td><a href="{%url 'DeleteIncome' x.id %}" class="text-danger" style="font-size:30px ;"><i class="bi bi-trash-fill"></i></a></td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <table class="table table-info">
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Reason</th>
+                        <th>Mode</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for x in income_today %}
+                      
+                    <tr>
+                        <td>{{x.Date}}</td>
+                        <td>{{x.Amount}}</td>
+                        <td>{{x.Reason}}</td>
+                        <td>{{x.Mode_Of_Payment}}</td>
+                        <td><a href="{%url 'DeleteExpense' x.id %}" class="text-danger " style="font-size:30px ;"><i class="bi bi-trash-fill"></i></a></td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <table class="table table-info">
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Reason</th>
+                        <td>Mode</td>
+                        <th>Delete</th>
+                    </tr>
+                    {% for x in income_month %}
+                      
+                    <tr>
+                        <td>{{x.Date}}</td>
+                        <td>{{x.Amount}}</td>
+                        <td>{{x.Reason}}</td>
+                        <td>{{x.Mode_Of_Payment}}</td>
+                        <td><a href="{%url 'DeleteIncome' x.id %}" class="text-danger" style="font-size:30px ;"><i class="bi bi-trash-fill"></i></a></td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+
+            </div>
+            <div class="tab-pane fade" id="credit" role="tabpanel" aria-labelledby="credit-tab">
+                <table class="table table-warning">
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Reason</th>
+                        <td>Mode</td>
+                        <th>Action</th>
+                    </tr>
+                    {% for x in credit %}
+                      
+                    <tr>
+                        <td>{{x.Date}}</td>
+                        <td>{{x.Amount}}</td>
+                        <td>{{x.Reason}}</td>
+                        <td>{{x.Mode_Of_Payment}} </td>
+                        
+                        <td class="text-center"><a href="{%url 'DeleteIncome' x.id %}" class="text-danger" style="font-size:30px ;"><i class="bi bi-trash-fill"></i> <a href="{%url 'CreditChange' x.id %}" class="btn btn-dark btn-sm">Mark As Received</a></a></td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+
+            </div>
+          </div>
+
+    </div>
+</div>
+
+{% endblock  %}

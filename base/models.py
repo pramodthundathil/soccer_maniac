@@ -44,6 +44,21 @@ class Fees(models.Model):
     
     def __str__(self):
         return self.student.FullName
+    
+class Income(models.Model):
+    
+    Date = models.DateField(auto_now_add=False)
+    Amount = models.FloatField()
+    Reason = models.CharField(max_length=1000)
+    option = (("Credit","Credit"),("Cash","Cash"),("Bank","Bank"),("UPI","UPI"))
+    Mode_Of_Payment = models.CharField(choices=option,max_length=255)
+    Cash_received = models.BooleanField(default=True)
+
+class Expense(models.Model):
+    
+    Date = models.DateField(auto_now_add=False)
+    Amount = models.FloatField()
+    Reason = models.CharField(max_length=1000)
 
     
     

@@ -38,32 +38,65 @@
         border: .5px solid #38598b57;
         border-radius: 7px;
     }
+    .popup{
+        position: fixed;
+        top:100px;
+        width: 300px;
+        right: 3px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      }
 </style>
 <div class="dash-content">
 
     <div class="hedding">
-        <h5><i class="bi bi-mortarboard-fill" style="font-size: 30px;"></i>
-            Student Data - Single View</h5>
+        <h5>
+            Fee data - Single View</h5>
     </div>
 </div>
 
-<div class="student mt-3">Details Of {{student.FullName}}</div>
+<div class="student mt-3">Fee Details Of {{student.FullName}}</div>
 
 <div class="actions mt-3">
-    <div class="action-items text-center">
-        <a href="{%url 'DeleteStudent' student.id %}" class="text-danger"><i class="bi bi-trash-fill"></i></a> <br>
-        <span class="text-danger">Delete</span>
-    </div>
+    
     <!-- <div class="action-items">
     </div> -->
+    {% for message in messages  %}
+    
+
+  <div class="alert {{message.tags}} alert-dismissible fade show popup" role="alert">
+    <strong>Success!</strong> {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  {% endfor %}
 
 </div>
+<div class="studentdetails mt-3">
+    <table class="table table-stripped table-warning">
+        <tr>
+            <th>Date</th>
+            <th>Fee Amount</th>
+            <th>Reson</th>
+            <th>Action</th>
+        </tr>
+        {% for i in fees %}
+        <tr>
+            <td>{{i.date}}</td>
+            <td>{{i.Fee_amount}}</td>
+            <td>{{i.reason}}</td>
+            <td><a href="{%url 'DeleteFee' i.id %}" class="text-danger" style="font-size: larger;"><i class="bi bi-trash-fill"></i></a></td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+<div class="student mt-3">Personal Details Of {{student.FullName}}</div>
 
 <div class="studentdetails mt-3">
     <table class="table table-info table-striped-columns">
         <tr>
             <td>Name</td>
-            <th>: {{student.FullName}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-secondary" href="{%url 'FeeSigleView' student.id %}">Fees</a></th>
+            <th>: {{student.FullName}}</th>
         </tr>
         <tr>
             <td>DOB</td>
@@ -85,7 +118,7 @@
 
         </tr>
         <tr>
-            <td>Parenet Mobile</td>
+            <td>Parent Mobile</td>
             <th>: {{student.Parents_Mobile_Number}}</th>
 
         </tr>

@@ -14,5 +14,22 @@ urlpatterns = [
     path("Admissionfeeenter",views.Admissionfeeenter,name="Admissionfeeenter"),
     path("UpcomingPayments",views.UpcomingPayments,name="UpcomingPayments"),
     path("PendinFees",views.PendinFees,name="PendinFees"), 
-     
+    path("FeeSigleView/<int:pk>",views.FeeSigleView,name="FeeSigleView"), 
+    path("DeleteFee/<int:pk>",views.DeleteFee,name="DeleteFee"), 
+    path("IncomeAdd",views.IncomeAdd,name="IncomeAdd"), 
+    path("ExpenseAdd",views.ExpenseAdd,name="ExpenseAdd"),
+    path("ExpenseTotalView",views.ExpenseTotalView,name="ExpenseTotalView"),
+    path("DeleteExpense/<int:pk>",views.DeleteExpense,name="DeleteExpense"), 
+    path("IncomeTotalView",views.IncomeTotalView,name="IncomeTotalView"), 
+    path("DeleteIncome/<int:pk>",views.DeleteIncome,name="DeleteIncome"), 
+    path("CreditChange/<int:pk>",views.CreditChange,name="CreditChange"), 
+    path("GenerateStudentReport",views.GenerateStudentReport,name="GenerateStudentReport"), 
+    path("FeeReportDate",views.FeeReportDate,name="FeeReportDate"),
+    path("FeeReportMonth",views.FeeReportMonth,name="FeeReportMonth"), 
+    path("FeeReport",views.FeeReport,name="FeeReport"), 
+    path("ExpenseReport",views.ExpenseReport,name="ExpenseReport"), 
+    path("ExpenseReportByDate",views.ExpenseReportByDate,name="ExpenseReportByDate"), 
+    path("IncomeReport",views.IncomeReport,name="IncomeReport"), 
+    path("IncomeReportByDate",views.IncomeReportByDate,name="IncomeReportByDate"), 
+              
 ] 

@@ -62,7 +62,7 @@
 
   <div class="student-add mt-3">
     <button class="newbtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle"></i> Add Student</button>
-    <a href="" class="btn btn-outline-dark"><i class="bi bi-download"></i> Generate Report</a>
+    <a href="{%url 'GenerateStudentReport' %}" class="btn btn-outline-dark"><i class="bi bi-download"></i> Generate Report</a>
   
   </div>
   {% for message in messages  %}

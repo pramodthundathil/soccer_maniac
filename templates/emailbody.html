@@ -1,0 +1,22 @@
+{% autoescape off %}
+Hi,
+
+This Message from Soccer Maniac Admin.
+
+Kindly note that fee pending for below students.
+
+{% for i in pendingstudents  %}
+
+{{i.FullName}} Date of Joining - {{i.Date_of_Joining}}
+  
+{% endfor %}
+
+
+
+Best Regards,
+
+Soccer Maniac Application Admin
+
+**This is a system generated email do not replay**
+ 
+ {% endautoescape %}

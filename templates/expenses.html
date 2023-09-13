@@ -1,10 +1,258 @@
 {% extends "index.html" %}
 {% block content %}
+<style>
+  .popup {
+    position: fixed;
+    top: 100px;
+    width: 300px;
+    right: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  }
+
+  .newbtn {
+    padding: 8px 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    background-color: #38598b;
+    border: .5px solid black;
+    text-decoration: none;
+  
+  }
+  .button-group a{
+    margin: 20px;
+  }
+  .forminputs{
+    text-align: center;
+}
+.forminputs input, select, textarea{
+    width:80%;
+    padding: 10px;
+    border: .5px solid #38598b57;
+    border-radius: 7px;
+}
+@media (max-width:600px){
+  .forminputs select{
+      font-size: 30px !important;
+  }
+}
+</style>
 <div class="dash-content">
-    <div class="hedding">
-        <h5><i class="bi bi-mortarboard-fill" style="font-size: larger;"></i>
-             Expenses</h5>
+  <div class="hedding">
+    <h5>
+      Income and Expense
+    </h5>
+  </div>
+</div>
+<div class="container text-center button-group mt-5">
+  <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" class="newbtn">Add Income</a>
+  <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-info">Add Expense</a>
+  <a href=""  data-bs-toggle="modal" data-bs-target="#staticBackdropreport" class="btn btn-outline-dark"><i class="bi bi-download"></i> Generate Report</a>
+
+</div>
+{% for message in messages  %}
+
+<div class="alert {{message.tags}} alert-dismissible fade show popup" role="alert">
+  <strong>Success!</strong> {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+<div class="container">
+  <div class="expense-items mt-5">
+    <div class="feedetails">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="feecolletion">
+            <div class="top-head">
+              <div class="top-item">
+                <h6>Expense ({{month}}) </h6>
+              </div>
+              <div class="top-item">
+                <a href="{%url 'ExpenseTotalView' %}" class="btn btn-warning">View</a>
+              </div>
+            </div>
+            <div class="tableitems">
+              <table class="table table-primary">
+                <tr>
+                  <td>Total Expense</td>
+                  <td class="amount">Rs.{{month_total}}/-</td>
+                </tr>
+                <tr>
+                  <td>Todays Expense</td>
+                  <td class="amount">Rs.{{day_total}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="income-items">
+    <div class="feedetails">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="feecolletion">
+            <div class="top-head">
+              <div class="top-item">
+                <h6>Income ({{month}}) </h6>
+              </div>
+              <div class="top-item">
+                <a href="{%url 'IncomeTotalView' %}" class="btn btn-warning">View</a>
+              </div>
+            </div>
+            <div class="tableitems">
+              <table class="table table-primary">
+                <tr>
+                  <td>Total Income</td>
+                  <td class="amount">Rs.{{month_income}}/-</td>
+                </tr>
+                <tr>
+                  <td>Todays Income</td>
+                  <td class="amount">Rs.{{day_income}}</td>
+                </tr>
+                <tr>
+                  <td>Credit</td>
+                  <td class="amount">Rs.{{credit}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- models  -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add A Income</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body forminputs">
+        <form action="{%url 'IncomeAdd' %}" method="POST">
+          {% csrf_token %}
+
+          {% for fields in form1  %}
+
+          {{fields.label}}:<br>
+          {{fields}}<br><br>
+          
+
+            
+          {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Add An Expense</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body forminputs">
+        <form action="{%url 'ExpenseAdd' %}" method="POST">
+          {% csrf_token %}
+
+          {% for fields in form %}
+
+          {{fields.label}}:<br>
+          {{fields}}<br><br>
+          
+
+            
+          {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdropreport" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-light">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Create Income and Expense Report</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body forminputs">
   
+          <a href="{%url 'ExpenseReport' %}" class="btn btn-dark mt-2">Generate Expense Report</a>
+          <a href="{%url 'IncomeReport' %}" class="btn btn-dark mt-2">Generate Income Report</a>
+  
+         
+        </div>
+        <div class="modal-body forminputs" style="border-top:2px solid gray">
+  
+          <h5 class="text-dark">Generate Report By Date (Expense):</h5>
+          <form action="{%url 'ExpenseReportByDate' %}" method="post">
+            {% csrf_token %}
+            <br>
+            <label for="">Start Date:</label><br>
+            <input type="date" name="datestart" required> <br>
+            <label for="">End Date:</label><br>
+            <input type="date" name="dateend" required> <br>
+            <br>
+          <button type="submit" class="btn btn-dark" data-bs-dismiss="modal">Generate</button>
+          <!-- <button type="submit" class="btn btn-primary">Save</button> -->
+        </form>
+  
+         
+        </div>
+
+        <div class="modal-body forminputs" style="border-top:2px solid gray">
+  
+          <h5 class="text-dark">Generate Report By Date (Income):</h5>
+          <form action="{%url 'IncomeReportByDate' %}" method="post">
+            {% csrf_token %}
+            <br>
+            <label for="">Start Date:</label><br>
+            <input type="date" name="datestart" required> <br>
+            <label for="">End Date:</label><br>
+            <input type="date" name="dateend" required> <br>
+            <br>
+          <button type="submit" class="btn btn-dark" data-bs-dismiss="modal">Generate</button>
+          <!-- <button type="submit" class="btn btn-primary">Save</button> -->
+        </form>
+  
+         
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="submit" class="btn btn-primary">Save</button> -->
+  
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}

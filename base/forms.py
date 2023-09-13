@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput
-from .models import StudentDetails, Fees
+from .models import StudentDetails, Fees, Income, Expense
 from datetime import datetime
 
 date =  str(datetime.now()).split(" ")[0]
@@ -32,4 +32,20 @@ class FeesForm(ModelForm):
             "date":TextInput(attrs={"max":date,"type":"date"})
         }    
 
+class IncomeForm(ModelForm):
+    class Meta:
+        model = Income
+        fields = ["Date","Amount","Reason","Mode_Of_Payment"]
+        widgets = {
+            "Date": TextInput(attrs={"type":"date","max":date})
+        }
+        
+class ExpenseForm(ModelForm):
+    class Meta:
+        model = Expense
+        fields = "__all__"
+        widgets = {
+            "Date": TextInput(attrs={"type":"date","max":date})
+        }
+        
         
