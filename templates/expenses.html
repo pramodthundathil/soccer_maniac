@@ -46,7 +46,7 @@
 </div>
 <div class="container text-center button-group mt-5">
   <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" class="newbtn">Add Income</a>
-  <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-info">Add Expense</a>
+  <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdropExpense" class="btn btn-info">Add Expense</a>
   <a href=""  data-bs-toggle="modal" data-bs-target="#staticBackdropreport" class="btn btn-outline-dark"><i class="bi bi-download"></i> Generate Report</a>
 
 </div>
@@ -136,16 +136,21 @@
   <div class="modal-dialog">
     <div class="modal-content bg-light">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add A Income</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add An Income</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body forminputs">
         <form action="{%url 'IncomeAdd' %}" method="POST">
           {% csrf_token %}
+          
 
           {% for fields in form1  %}
 
+          {% if fields.label == "Reason" %}
+          <label for="">Remarks:</label><br>
+          {% else %}
           {{fields.label}}:<br>
+          {% endif %}
           {{fields}}<br><br>
           
 
@@ -166,7 +171,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropExpense" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content bg-light">
       <div class="modal-header">
@@ -178,8 +183,11 @@
           {% csrf_token %}
 
           {% for fields in form %}
-
+          {% if fields.label == "Reason" %}
+          <label for="">Remarks</label><br>
+          {% else %}
           {{fields.label}}:<br>
+          {% endif %}
           {{fields}}<br><br>
           
 
