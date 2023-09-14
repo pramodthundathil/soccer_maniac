@@ -255,9 +255,9 @@ textarea {
           {% csrf_token %}
           <br>
           <label for="">Start Date:</label><br>
-          <input type="date" name="datestart" required> <br>
+          <input type="date" id="datefield" name="datestart" oninput="DateValueChange()" required> <br>
           <label for="">End Date:</label><br>
-          <input type="date" name="dateend" required> <br>
+          <input type="date" id="datefield1" name="dateend" required> <br>
           <br>
         <button type="submit" class="btn btn-dark" data-bs-dismiss="modal">Generate</button>
         <!-- <button type="submit" class="btn btn-primary">Save</button> -->
@@ -274,5 +274,27 @@ textarea {
     </div>
   </div>
 </div>
+
+<script>
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = '0' + dd
+  }
+  if (mm < 10) {
+    mm = '0' + mm
+  }
+  
+  today = yyyy + '-' + mm + '-' + dd;
+  document.getElementById("datefield").setAttribute("max", today);
+  document.getElementById("datefield1").setAttribute("max", today)
+
+  function DateValueChange(){
+    datev = document.getElementById("datefield").value
+    document.getElementById("datefield1").setAttribute("min", datev);
+    }
+</script>
   
 {% endblock %}
